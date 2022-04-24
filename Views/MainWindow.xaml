@@ -15,7 +15,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <Label Content="Immatriculation"  Margin="0 0 100 0" Width="100"/>
-                <TextBox x:Name="TXT_immatriculation"  Width="100" Margin="0 0 100 0"/>
+                <TextBox x:Name="TXT_immatriculationIn"  Width="100" Margin="0 0 100 0"/>
                 <Button x:Name="CheckInBtn" Content="Check In"  Width="100" Margin="0 30 100 0" Click="CheckInBtn_Click"  />
                 <Label Content="Dérnier Control"  Margin="0 20 150 0" Width="100"/>
 
@@ -24,10 +24,23 @@
                     <TextBlock Text="{Binding Path=SelCar.CarImmatriculation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Car Marque : "/>
+                    <TextBlock Text="Marque : "/>
                     <TextBlock Text="{Binding Path=SelCar.CarMarque, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Modele : "/>
+                    <TextBlock Text="{Binding Path=SelCar.CarModele, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Conducteur : "/>
+                    <TextBlock Text="{Binding Path=SelCar.CarConducteur, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
 
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Label Content="Immatriculation"  Margin="0 0 100 0" Width="100"/>
+                <TextBox x:Name="TXT_immatriculationOut"  Width="100" Margin="0 0 100 0"/>
+                <Button x:Name="CheckOutBtn" Content="Check Out"  Width="100" Margin="0 30 100 0" Click="CheckOutBtn_Click"  />
             </StackPanel>
 
         </Grid>
@@ -43,9 +56,12 @@
                       Height="Auto"  
                       AlternatingRowBackground="LightCyan">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Num Car" Binding="{Binding CarImmatriculation}"/>
-                <DataGridTextColumn Header="CarMarque" Binding="{Binding CarMarque}"/>
-                <DataGridTextColumn Header="CarConducteur " Binding="{Binding CarConducteur}"/>
+                <DataGridTextColumn Header="Immatriculation" Binding="{Binding CarImmatriculation}"/>
+                <DataGridTextColumn Header="NomConducteur " Binding="{Binding CarConducteur}"/>
+                <DataGridTextColumn Header="Marque" Binding="{Binding CarMarque}"/>
+                <DataGridTextColumn Header="DateHeureArrivee" Binding="{Binding EntreeCar , StringFormat={}{0:yy-MM-dd h:m}}"/>
+                <DataGridCheckBoxColumn Header="IsAccesDelivre" Binding="{Binding EntreeCar}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
 

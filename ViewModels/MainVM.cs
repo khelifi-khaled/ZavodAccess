@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using ZavodAccess.Models;
 using ZavodAccess.Utilities.DataAccess;
 
@@ -29,7 +26,7 @@ namespace ZavodAccess.ViewModels
 
             Cars = VehiculesDataAccesse.GetCarsDatas();
             Concate(Cars, UtilitairesDataAccesse.GetCarsDatas(), CamionsDataAccesse.GetCarsDatas());
-            CheckOutList = new CarCollection();
+            CheckInList = new CarCollection();
             CheckOutList = new CarCollection();
         }
 
@@ -91,25 +88,68 @@ namespace ZavodAccess.ViewModels
 
         public void CheckIn(string carNum)
         {
-            if (Cars.CheckExistedCar(carNum))
+            if (!string.IsNullOrEmpty(carNum))
             {
-                SelCar = Cars.GetCar(carNum);
-                SelCar.EntreeCar = DateTime.Now;
-                CheckInList.Add(SelCar);
+                if (!CheckInList.CheckExistedCar(carNum))
+                {
+                    if (Cars.CheckExistedCar(carNum))
+                    {
+                        SelCar = Cars.GetCar(carNum);
+                        SelCar.EntreeCar = DateTime.Now;
+                        CheckInList.Add(SelCar);
+                    }
+                    else
+                    {
+                        SelCar = new Vehicule(carNum);
+                        SelCar.EntreeCar = DateTime.Now;
+                        CheckInList.Add(SelCar);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Véhicule {carNum} existe deja dans le checkIn List", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
             }
             else
             {
-                
+                MessageBox.Show("vous devez remplire le chemp de l'Immatriculation avent le check in svp", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
 
-       
 
-        protected void OnPropertyChanged(string propertyName)
+
+        public void CheckOut(string carNum)
+        {
+            if (!string.IsNullOrEmpty(carNum))
+            {
+                if (CheckInList.CheckExistedCar(carNum))
+                {
+                    SelCar = CheckInList.GetCar(carNum);
+                    CheckInList.Remove(SelCar);
+                    CheckOutList.Add(SelCar);
+                }
+                else
+                {
+                    MessageBox.Show($"la voiture {carNum} n'a pas fais son check in  ", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("vous devez remplire le chemp de l'Immatriculation avent le check out svp", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+
+            protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+ 
 
     }
 }

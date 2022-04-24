@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using ZavodAccess.ViewModels;
 
 namespace ZavodAccess.Views
@@ -38,7 +25,12 @@ namespace ZavodAccess.Views
 
         private void CheckInBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainVM.CheckIn(TXT_immatriculation.Text);
+            MainVM.CheckIn(TXT_immatriculationIn.Text);
+        }
+
+        private void CheckOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainVM.CheckOut(TXT_immatriculationOut.Text);
         }
     }
 }
